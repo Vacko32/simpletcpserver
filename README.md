@@ -24,6 +24,8 @@ It is expected for users that they will be playing with the code, editing it to 
 python3 main.py
 ```
 
+> Note: My testing was done on python3.12 and Ubuntu 22.04.5 LT
+
 ## Configuration
 
 You can change the host or port in the runServer() function at the bottom of the script:
