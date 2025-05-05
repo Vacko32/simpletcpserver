@@ -15,6 +15,13 @@
 import socket
 import threading
 import re
+from prometheus_client import start_http_server, Counter, Gauge
+
+# Start Prometheus metrics server
+start_http_server(8050)
+# Define Prometheus metrics
+client_count = Gauge('chat_client_count', 'Number of connected clients')
+msg_count = Counter('chat_message_count', 'Number of messages sent')
 
 # Regex patterns from protocol grammar
 # The patters where created with a help of chatgpt, because the server is not the core of this project and regexes also 
@@ -105,6 +112,7 @@ def handleClient(conn, addr):
                                 rooms.setdefault("default", []).append(client)
                             client.send("REPLY OK IS Authentication successful\r\n")
                             broadcast(client, f"MSG FROM SERVER IS {client.displayName} joined default\r\n")
+                            client_count.inc()
                         else:
                             client.send("REPLY NOK IS Authentication failed\r\n")
                     else:
@@ -162,6 +170,7 @@ def handleClient(conn, addr):
         with roomLock:
             if client.room and client in rooms.get(client.room, []):
                 rooms[client.room].remove(client)
+                client_count.dec()
         conn.close()
 
 def runServer(host='127.0.0.1', port=4596):

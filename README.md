@@ -14,6 +14,12 @@ This is a simple TCP chat server built for project assigment purpose [IPK2025PRO
 - Inappropriate message filtering
 - Optional message fragmentation for testing segmentation handling
 
+> Note: The server can be deployed with docker, or locally. Thanks to succesfully integrating grafana and prometheus, user is now able to track count of users.
+
+![image](sample_demo.png)
+
+This just shows that the server can be scaled and can be tracked using dashboards.
+
 > Note: Regex patterns and segmented message broadcasting were assisted by ChatGPT. The basic socket setup, `bind`, and `broadcast` ideas were also supported by ChatGPT suggestions. All these prompts were based on the ABNF grammar and the TCP protocol specification . [ChatGPT] [RFC5234] [RFC793]
 
 It is expected for users that they will be playing with the code, editing it to ensure that they are testing what they want.
